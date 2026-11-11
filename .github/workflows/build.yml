@@ -1,0 +1,67 @@
+# Builds AltDeck.exe on GitHub's Windows machines.
+# - Every push to main: builds and keeps the exe as a downloadable "artifact" (Actions tab).
+# - Every tag like v1.0.0: builds and publishes a GitHub Release with AltDeck.exe + its SHA-256 checksum.
+name: Build
+
+on:
+  push:
+    branches: [ main ]
+    tags: [ 'v*' ]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: write   # needed to create the release
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - name: Get the code
+        uses: actions/checkout@v4
+
+      - name: Install .NET 10
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.0.x'
+
+      - name: Work out the version
+        id: version
+        shell: pwsh
+        run: |
+          $ref = "${{ github.ref_name }}"
+          $version = if ("${{ github.ref_type }}" -eq "tag" -and $ref -match '^v(\d+\.\d+\.\d+)') { $Matches[1] } else { "0.0.0-dev" }
+          "value=$version" >> $env:GITHUB_OUTPUT
+
+      - name: Build single-file AltDeck.exe
+        run: >
+          dotnet publish src/AltDeck.csproj -c Release -r win-x64 --self-contained true
+          -p:PublishSingleFile=true -p:IncludeNativeLibrariesForSelfExtract=true
+          -p:EnableCompressionInSingleFile=true -p:DebugType=none
+          -p:Version=${{ steps.version.outputs.value }}
+          -o build
+
+      - name: Write SHA-256 checksum
+        shell: pwsh
+        run: |
+          $hash = (Get-FileHash build/AltDeck.exe -Algorithm SHA256).Hash.ToLower()
+          "$hash  AltDeck.exe" | Out-File -Encoding ascii build/AltDeck.exe.sha256
+          "**AltDeck.exe SHA-256:** ``$hash``" >> $env:GITHUB_STEP_SUMMARY
+
+      - name: Keep the exe as a build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: AltDeck-${{ steps.version.outputs.value }}
+          path: |
+            build/AltDeck.exe
+            build/AltDeck.exe.sha256
+
+      - name: Publish GitHub Release
+        if: github.ref_type == 'tag'
+        uses: softprops/action-gh-release@v2
+        with:
+          name: AltDeck ${{ github.ref_name }}
+          draft: true   # you review it, paste the release notes, then press "Publish release"
+          files: |
+            build/AltDeck.exe
+            build/AltDeck.exe.sha256

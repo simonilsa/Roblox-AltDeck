@@ -1,0 +1,12 @@
+# Build output
+bin/
+obj/
+build/
+/AltDeck.exe
+
+# IDE files
+.vs/
+.vscode/
+.idea/
+*.user
+*.suo

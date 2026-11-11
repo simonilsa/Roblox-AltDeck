@@ -1,0 +1,29 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net10.0-windows</TargetFramework>
+    <UseWindowsForms>true</UseWindowsForms>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <AssemblyName>AltDeck</AssemblyName>
+    <RootNamespace>RobloxAltManager</RootNamespace>
+    <ApplicationIcon>app.ico</ApplicationIcon>
+    <ApplicationHighDpiMode>PerMonitorV2</ApplicationHighDpiMode>
+    <Product>AltDeck (unofficial multi-account launcher)</Product>
+    <Version>1.0.0</Version>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!-- One JSON file per UI language, embedded in the exe as "lang.<code>.json". -->
+    <EmbeddedResource Include="Languages\*.json" LogicalName="lang.%(Filename).json" />
+    <!-- Flag pictures for the language menu, embedded as "flag.<code>.png". -->
+    <EmbeddedResource Include="Flags\*.png" LogicalName="flag.%(Filename).png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- Embedded browser used for the login window (Edge WebView2, preinstalled on Windows 10/11). -->
+    <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.*" />
+  </ItemGroup>
+
+</Project>
