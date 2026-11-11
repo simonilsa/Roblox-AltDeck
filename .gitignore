@@ -10,3 +10,6 @@ build/
 .idea/
 *.user
 *.suo
+
+# Website build output
+_site/

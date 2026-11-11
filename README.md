@@ -5,7 +5,7 @@
 Launch any number of your own Roblox accounts at once: into the same game, into one specific server, or straight into a friend's game.
 
 ## Download
-**[Download the latest AltDeck.exe](https://github.com/simonilsa/AltDeck/releases/latest)** for Windows 10/11 (64-bit). It's a single file with no installer: double-click it to run.
+**[Download the latest AltDeck.exe](https://github.com/YOUR-GITHUB-NAME/AltDeck/releases/latest)** for Windows 10/11 (64-bit). It's a single file with no installer: double-click it to run.
 
 - Only download AltDeck from this repository's Releases page. See [SECURITY.md](SECURITY.md) for how to verify the file.
 - Windows may show **"Windows protected your PC"** because the exe isn't code-signed yet. Click **More info → Run anyway**. Every release is built from this source code by GitHub Actions, and the checksum is listed next to the download.
@@ -32,6 +32,18 @@ Launch any number of your own Roblox accounts at once: into the same game, into 
 
 Right-click an account to launch only that one, rename it, re-login, reorder it or remove it.
 
+## Languages
+On first start, AltDeck shows a list of languages with flags, with your Windows language preselected. You can switch any time with the **Language** menu (globe icon and flags) in the top-right corner. The change applies instantly and is remembered.
+
+Available languages: English, Español, Português (Brasil), Filipino (Tagalog), Bahasa Indonesia, Français, Deutsch, Русский, Türkçe, Tiếng Việt.
+
+**Add or fix a language:**
+1. Copy `src/Languages/en.json` to a new file named with the language code, for example `th.json` or `ko.json`.
+2. Translate the values, and keep `{0}`, `{1}` exactly as they are. Optionally add a flag picture `src/Flags/<code>.png` (3:2, for example 90 × 60). Without one, the globe is shown.
+3. Run Build.bat again. The new language appears in the menu automatically.
+
+Any text that's missing from a translation falls back to English.
+
 ## How it stays on the safe side
 - **No client tampering.** AltDeck never opens, reads, writes or injects into the Roblox process or its memory, and it doesn't touch the anti-cheat. Multi-instance works by creating and holding two named Windows objects (`ROBLOX_singletonMutex` / `ROBLOX_singletonEvent`) *before* Roblox starts, inside AltDeck's own process. Clients are started through the normal `roblox-player:` link, exactly like pressing Play on the website.
 - **Logins stay on your PC.**
@@ -39,7 +51,7 @@ Right-click an account to launch only that one, rename it, re-login, reorder it 
   - There is no AltDeck server, no telemetry and no updater.
   - The code refuses to send any request that isn't HTTPS to a `roblox.com` address (see `SendAsync` in `RobloxApi.cs`).
 - **Official login page.** You log in on Roblox's own page, and you solve any captcha or 2-step check yourself. Nothing is bypassed.
-- **Roblox's servers.**
+- **Gentle on Roblox's servers.**
   - All requests go through a throttle (at most about 4 per second).
   - If Roblox answers "too many requests" (HTTP 429), the app waits as long as Roblox asks before trying once more.
   - There is no background polling: requests only happen when you click something.
@@ -57,6 +69,15 @@ Right-click an account to launch only that one, rename it, re-login, reorder it 
 - **Multi-instance OFF:** Roblox was already open when the app started. Close all Roblox windows (there's a button for it), then restart the app.
 - **Login window doesn't open:** install the Microsoft Edge WebView2 Runtime (built into Windows 10/11).
 
+## Website
+The `website/` folder is AltDeck's homepage. GitHub builds and publishes it automatically, with one page per language.
+
+- **One-time setup:** go to **Settings → Pages**, and under "Build and deployment" set **Source** to **GitHub Actions**. Then on the **Actions** tab, open **Website** and click **Run workflow**. The address appears in Settings → Pages; it looks like `https://YOUR-NAME.github.io/AltDeck/`.
+- **Texts:** `website/i18n/<language>.json`. Edit, commit and push, and the site updates by itself.
+- **Screenshots:** save them as `website/assets/screenshot-1.png`, `screenshot-2.png` and so on. The Screenshots section appears automatically once at least one exists.
+- **Google Search Console:** paste the code Google gives you into `google_site_verification` in `website/config.json`. Submit `sitemap.xml` there.
+- **Try it locally:** run `python website/build.py --out _site`, then open `_site/index.html`.
+
 ## Project layout
 - `Build.bat`: one-click build to a standalone .exe
 - `src/`: C# / WinForms source (.NET 10 LTS). Open `src/AltDeck.csproj` in Visual Studio or Rider.
@@ -68,3 +89,4 @@ Right-click an account to launch only that one, rename it, re-login, reorder it 
   - `RobloxApi.cs`: web API calls, throttle, domain guard, launch links
   - `MultiInstance.cs`: singleton lock
   - `AccountStore.cs`, `Dpapi.cs`: encrypted local storage
+- `website/`: the homepage (template, styles, texts per language, build script)

@@ -1,0 +1,207 @@
+<!doctype html>
+<html lang="{{{lang}}}">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{{meta.title}}</title>
+<meta name="description" content="{{meta.description}}">
+<link rel="canonical" href="{{{canonical}}}">
+{{{hreflang}}}
+<meta name="theme-color" content="#181c28">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="AltDeck">
+<meta property="og:title" content="{{meta.title}}">
+<meta property="og:description" content="{{meta.description}}">
+<meta property="og:url" content="{{{canonical}}}">
+<meta property="og:image" content="{{{base_url}}}/assets/social-preview.png">
+<meta property="og:image:width" content="1280">
+<meta property="og:image:height" content="640">
+<meta property="og:locale" content="{{{og_locale}}}">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="{{{base_url}}}/assets/social-preview.png">
+{{{verification}}}
+<link rel="icon" type="image/png" href="{{{root}}}assets/favicon.png">
+<link rel="apple-touch-icon" href="{{{root}}}assets/apple-touch-icon.png">
+<link rel="stylesheet" href="{{{root}}}assets/style.css">
+<script type="application/ld+json">{{{jsonld}}}</script>
+</head>
+<body>
+<a class="skip" href="#main">{{skip}}</a>
+
+<div class="suggest" id="suggest" hidden>
+  <img class="flag" id="suggest-flag" src="" alt="" width="24" height="16">
+  <span id="suggest-text"></span>
+  <a id="suggest-go" href="#"></a>
+  <button type="button" id="suggest-close" aria-label="{{banner.close}}">×</button>
+</div>
+
+<header class="hero">
+  <nav class="top" aria-label="AltDeck">
+    <a class="brand" href="{{{home}}}"><img src="{{{root}}}assets/icon.png" alt="" width="34" height="34"><span>AltDeck</span></a>
+    <div class="top-right">
+      <a class="top-link" href="{{{repo_url}}}">GitHub</a>
+      <details class="lang">
+        <summary>
+          <svg class="globe" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9.2"/><ellipse cx="12" cy="12" rx="4.2" ry="9.2"/><path d="M2.8 12h18.4M4.3 7.2h15.4M4.3 16.8h15.4"/></svg>
+          <img class="flag" src="{{{root}}}assets/flags/{{{lang_code}}}.png" alt="" width="24" height="16">
+          <span>{{{lang_name}}}</span>
+          <span class="sr">({{{lang_label}}})</span>
+        </summary>
+        <ul>
+{{{lang_menu}}}
+        </ul>
+      </details>
+    </div>
+  </nav>
+
+  <div class="hero-grid">
+    <div class="hero-copy">
+      <h1>{{hero.title}}</h1>
+      <p class="lead">{{hero.text}}</p>
+      <div class="actions">
+        <a class="btn btn-go" href="{{{download_url}}}">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12m0 0-5-5m5 5 5-5M4 20h16"/></svg>
+          {{hero.download}}
+        </a>
+        <a class="btn btn-quiet" href="{{{repo_url}}}">{{hero.source}}</a>
+      </div>
+      <p class="note">{{hero.note}}</p>
+    </div>
+
+    <div class="deck" role="img" aria-label="{{hero.title}}">
+      <div class="game g3"><div class="bar">Alt 3</div><div class="scene"><i></i></div></div>
+      <div class="game g2"><div class="bar">Alt 2</div><div class="scene"><i></i></div></div>
+      <div class="game g1"><div class="bar">Alt 1</div><div class="scene"><i></i></div></div>
+      <div class="app">
+        <div class="app-bar"><img src="{{{root}}}assets/icon.png" alt="" width="14" height="14">AltDeck</div>
+        <div class="app-steps">
+          <div><b>{{app.step1.title}}</b></div>
+          <div><b>{{app.step2.title}}</b><span>{{{mock_selected}}}</span></div>
+          <div><b>{{app.step3.title}}</b><span>{{{mock_friend}}}</span></div>
+        </div>
+        <ul class="app-list">
+          <li><span class="tick"></span>Main</li>
+          <li><span class="tick"></span>Alt 1</li>
+          <li><span class="tick"></span>Alt 2</li>
+          <li><span class="tick"></span>Alt 3</li>
+        </ul>
+        <div class="app-launch">{{{mock_launch}}}</div>
+        <div class="app-status">{{app.status.multiOn}}</div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main id="main">
+  <section class="how" aria-labelledby="how-title">
+    <h2 id="how-title">{{how.title}}</h2>
+    <ol class="steps">
+      <li><span class="num">1</span><h3>{{how.1.title}}</h3><p>{{how.1.text}}</p></li>
+      <li><span class="num">2</span><h3>{{how.2.title}}</h3><p>{{how.2.text}}</p></li>
+      <li><span class="num">3</span><h3>{{how.3.title}}</h3><p>{{how.3.text}}</p></li>
+    </ol>
+  </section>
+
+  <section class="features" aria-labelledby="feat-title">
+    <h2 id="feat-title">{{feat.title}}</h2>
+    <div class="feat-grid">
+      <div><h3>{{feat.1.title}}</h3><p>{{feat.1.text}}</p></div>
+      <div><h3>{{feat.2.title}}</h3><p>{{feat.2.text}}</p></div>
+      <div><h3>{{feat.3.title}}</h3><p>{{feat.3.text}}</p></div>
+      <div><h3>{{feat.4.title}}</h3><p>{{feat.4.text}}</p></div>
+      <div><h3>{{feat.5.title}}</h3><p>{{feat.5.text}}</p></div>
+      <div><h3>{{feat.6.title}}</h3><p class="langs">{{{lang_flags}}}</p></div>
+    </div>
+  </section>
+
+  <section class="safety" aria-labelledby="safe-title">
+    <div class="safety-box">
+      <h2 id="safe-title">{{safe.title}}</h2>
+      <p>{{safe.text}}</p>
+      <ul class="checks">
+        <li>{{safe.1}}</li>
+        <li>{{safe.2}}</li>
+        <li>{{safe.3}}</li>
+        <li>{{safe.4}}</li>
+      </ul>
+      <a class="more" href="{{{security_url}}}">{{safe.link}}</a>
+    </div>
+  </section>
+
+  <section class="shots" id="shots" aria-labelledby="shots-title" hidden>
+    <h2 id="shots-title">{{shots.title}}</h2>
+    <div class="shot-row">
+{{{screenshots}}}
+    </div>
+  </section>
+
+  <section class="faq" aria-labelledby="faq-title">
+    <h2 id="faq-title">{{faq.title}}</h2>
+    <details><summary>{{faq.1.q}}</summary><p>{{faq.1.a}}</p></details>
+    <details><summary>{{faq.2.q}}</summary><p>{{faq.2.a}}</p></details>
+    <details><summary>{{faq.3.q}}</summary><p>{{faq.3.a}}</p></details>
+    <details><summary>{{faq.4.q}}</summary><p>{{faq.4.a}}</p></details>
+    <details><summary>{{faq.5.q}}</summary><p>{{faq.5.a}}</p></details>
+    <details><summary>{{faq.6.q}}</summary><p>{{faq.6.a}} <a href="{{{contributing_url}}}">{{faq.6.link}}</a></p></details>
+  </section>
+</main>
+
+<section class="download" aria-labelledby="dl-title">
+  <h2 id="dl-title">{{dl.title}}</h2>
+  <p>{{dl.text}}</p>
+  <a class="btn btn-go" href="{{{download_url}}}">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12m0 0-5-5m5 5 5-5M4 20h16"/></svg>
+    {{dl.button}}
+  </a>
+  <a class="all" href="{{{releases_url}}}">{{dl.all}}</a>
+</section>
+
+<footer class="foot">
+  <p>{{foot.disclaimer}}</p>
+  <p>{{foot.license}} <a href="{{{repo_url}}}">{{foot.source}}</a> · <a href="{{{security_url}}}">{{foot.security}}</a></p>
+</footer>
+
+<script>
+(function () {
+  // Screenshots: the section only appears once at least one picture loads.
+  var shots = document.getElementById('shots');
+  document.querySelectorAll('.shot-row img').forEach(function (img) {
+    var show = function () { shots.hidden = false; };
+    var drop = function () { img.closest('figure').remove(); };
+    if (img.complete) { img.naturalWidth ? show() : drop(); }
+    else { img.addEventListener('load', show); img.addEventListener('error', drop); }
+  });
+
+  // Language suggestion: if the browser language has its own page, offer it once.
+  var pages = {{{suggest_data}}};
+  var current = '{{{lang_code}}}';
+  var store = { get: function (k) { try { return localStorage.getItem(k); } catch (e) { return null; } },
+                set: function (k, v) { try { localStorage.setItem(k, v); } catch (e) {} } };
+  document.querySelectorAll('.lang a[data-lang]').forEach(function (a) {
+    a.addEventListener('click', function () { store.set('altdeck-lang', a.dataset.lang); });
+  });
+  // Only on the English start page: someone on a translated page chose it on purpose.
+  if (current !== 'en' || store.get('altdeck-lang') || store.get('altdeck-suggest-closed')) return;
+  var wanted = null;
+  (navigator.languages || [navigator.language || '']).some(function (l) {
+    var c = (l || '').toLowerCase().split('-')[0];
+    if (c === 'tl') c = 'fil';
+    if (pages[c]) { wanted = c; return true; }
+    return false;
+  });
+  if (!wanted || wanted === current) return;
+  var p = pages[wanted];
+  document.getElementById('suggest-flag').src = p.flag;
+  document.getElementById('suggest-text').textContent = p.text;
+  var go = document.getElementById('suggest-go');
+  go.textContent = p.go; go.href = p.url; go.lang = wanted;
+  go.addEventListener('click', function () { store.set('altdeck-lang', wanted); });
+  var bar = document.getElementById('suggest');
+  bar.lang = wanted; bar.hidden = false;
+  document.getElementById('suggest-close').addEventListener('click', function () {
+    bar.hidden = true; store.set('altdeck-suggest-closed', '1');
+  });
+})();
+</script>
+</body>
+</html>

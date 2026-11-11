@@ -1,0 +1,57 @@
+# Builds the website from website/ and publishes it with GitHub Pages.
+# One-time setup: Settings → Pages → "Build and deployment" → Source: GitHub Actions.
+# After that it updates by itself whenever the website texts, flags or app translations change.
+name: Website
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - 'website/**'
+      - 'src/Languages/**'
+      - 'src/Flags/**'
+      - '.github/workflows/pages.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get the code
+        uses: actions/checkout@v4
+
+      - name: Read the Pages address
+        id: pages
+        uses: actions/configure-pages@v5
+
+      - name: Build the website
+        run: >
+          python3 website/build.py
+          --base-url "${{ steps.pages.outputs.base_url }}"
+          --repo-url "${{ github.server_url }}/${{ github.repository }}"
+          --out _site
+
+      - name: Upload the website
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Publish
+        id: deployment
+        uses: actions/deploy-pages@v4
